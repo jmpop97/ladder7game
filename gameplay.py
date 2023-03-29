@@ -1,52 +1,74 @@
-import random
+from pynput import keyboard
+import re
+import os
+import time
+
+global key_n
+global key_range
+global isActive
+key_n = 0
+key_range = 5
+
+# 선택지
 
 
-class BaseCharacter:
-    def __init__(self, name, hp, mp, str, arm, int, spd):
-        self.name = name
-        self.max_hp = hp
-        self.hp = hp
-        self.max_mp = mp
-        self.mp = mp
-        self.str = str
-        self.arm = arm
-        self.int = int
-        self.spd = spd
-        pass
+def on_press(key):
+    global key_n
+    global key_range
+    try:
+        key_n_in = re.sub(r'[^0-9]', '', '{0}'.format(
+            key.char))
+        if key_n_in == "":
+            pass
+        else:
+            key_n = int(key_n_in)
+            if key_range < key_n:
+                key_n = key_range
+            elif 0 == key_n:
+                key_n = 1
+            print(key_n)
+    except AttributeError:
+        if ('{0}'.format(key) == "Key.up"):
+            key_n = key_n % key_range
+            key_n += 1
 
-    def status(self):
-        print(f"{self.name}: Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}")
+        elif ('{0}'.format(key) == "Key.down"):
+            key_n -= 2
+            key_n = key_n % key_range
+            key_n += 1
+        elif ('{0}'.format(key) == "Key.right"):
+            key_n = key_n % key_range
+            key_n += 1
+        elif ('{0}'.format(key) == "Key.left"):
+            key_n -= 2
+            key_n = key_n % key_range
+            key_n += 1
+        print(key_n)
 
-    def attack(self, other):
-        damage = random.randint(self.str, self.str*)
-        other.hp = max(other.hp - damage, 0)
-        print(f"{self.name}의 공격! {other.name}에게 {damage}의 데미지를 입혔습니다.")
-        if other.hp == 0:
-            print(f"{other.name}이(가) 쓰러졌습니다.")
+# 종료
 
 
-class Player(BaseCharacter):
+def on_release(key):
+    if key == keyboard.Key.esc:  # esc 키가 입력되면 종료
+        isActive = False
+        return False
+
+ # 리스너 등록방법1
+# with keyboard.Listener(
+#        on_press=on_press, on_release=on_release) as listener:
+#    listener.join()
+
+
+listener = keyboard.Listener(
+    on_press=on_press,
+    on_release=on_release)
+listener.start()
+
+print("실행중입니다.")
+isActive = True
+while isActive:
+
+    time.sleep(0.1)
     pass
 
-
-class Monster(BaseCharacter):
-    pass
-
-
-# start game
-
-# 직업선택
-
-# output: charaters=[직업1,직업2,...]
-
-# 몬스터 생성
-stage_monster = {1: [""],
-                 2: [""]}
-
-# 스테이지 시작
-stage_n = 1
-stage(charaters, stage_monster[stage_n])
-# 현재상태 출력
-# 공격순서list
-# 공격순서list순 공격
-# 승리 시 보상
+print("종료했습니다.")
