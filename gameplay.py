@@ -3,6 +3,7 @@ import re
 import os
 import time
 from player import *
+from monster import *
 
 
 global key_zero
@@ -42,9 +43,9 @@ def on_press(key):
             # print(key_n)
     except AttributeError:
         if (key == keyboard.Key.up):
-            key_m += 1
-        elif (key == keyboard.Key.down):
             key_m -= 1
+        elif (key == keyboard.Key.down):
+            key_m += 1
         elif (key == keyboard.Key.right):
             key_n = key_n % key_range
             key_n += 1
@@ -62,8 +63,8 @@ def on_press(key):
 # 키보드 out
         if key_m < 1:
             key_m = 1
-        elif key_m > key_range:
-            key_m = key_range
+        elif key_m > key_range_v:
+            key_m = key_range_v
 
 
 def on_release(key):
@@ -94,6 +95,9 @@ def reset_global(key_range_n, key_range_m):
         key_m = 1
         key_range_v = key_range_m
         key_zero = False
+    else:
+        key_range = key_range_n
+        key_range_v = key_range_m
 
 
 ###########################
@@ -114,10 +118,8 @@ def display_1():
     global key_zero
     global char_num
     global change_m
-
-    charater_range = 4  # 명
-    select_charaters = 4  # 선택창 4명
-
+    global charater
+    global monsters
     reset_global(4, 3)
 
     print("직업선택선택")
@@ -131,13 +133,18 @@ def display_1():
         enter_on = False
         key_zero = True
         charater = job_dic[jobs[key_n-1]](player_name)
+        monsters = stage_monster(1)
         return 2
     else:
         return 1
 #
 
 
-char_list = [1, 1, 1]
+###########################################
+selection = [1, 1]
+global change_n
+change_n = 1
+select_n = 3
 
 
 def display_2():
@@ -147,17 +154,54 @@ def display_2():
     global key_zero
     global char_num
     global change_m
-
-    player_list = [1, 2, 3]
-    skill_list = [1, 2]
-
-    reset_global(3, 2)
+    global select_n
+    global change_n
+    global charater
+    global monsters
+    # player_list = [1, 2, 3]
+    skill_list = ["공격"]+skills_that_have(charater)
+    print(skill_list)
+    target_list = monsters
+    print(key_m)
+    # key_m=1:3 // select_n=1:2 // select_n=3
     if key_m == 1:
+        range_n = 2
+    elif select_n == 1:
+        range_n = len(skill_list)
+
+    elif select_n == 2:
+        range_n = len(target_list)
+    else:
+        range_n = 10
+    print(range_n)
+    reset_global(range_n, 2)
+
+    # key_n,key_m 설정
+    if key_m == 1:
+        if change_n:
+            key_n = 1
+            change_n = False
+        select_n = key_n
         change_m = True
     if key_m == 2:
         if change_m:
             key_n = 1
+            if select_n == 1:
+                selection[1] = 1
             change_m = False
+        selection[select_n-1] = key_n
+        # 초기화
+
+        change_n = True
+    print([key_n, key_m])
+    print(selection)
+
+    if enter_on:
+        # 엔터시 상호작용
+        key_zero = True
+        reset_global(2, 2)
+        enter_on = False
+        pass
     return 2
 
 
@@ -170,7 +214,6 @@ def display_infos():
     global tab_on
     if (tab_on):
         print("info")
-
 
     # display
 displayer_dic = {1: display_1,
@@ -189,7 +232,8 @@ listener = keyboard.Listener(
 listener.start()
 
 print("실행중입니다.")
-player_name = input("사용자 이름 : ")
+# change#player_name = input("사용자 이름 : ")
+player_name = "이름"
 isActive = True
 key_zero = True
 display_n = 1
