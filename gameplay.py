@@ -100,10 +100,9 @@ def reset_global(key_range_n, key_range_m):
         key_range_v = key_range_m
 
 
-###########################
+#### display1########
 # 캐릭터 선택
-global charaters
-charaters = []
+
 
 global char_num
 global change_m
@@ -140,7 +139,7 @@ def display_1():
 #
 
 
-###########################################
+##### display2#############################
 selection = [1, 1]
 global change_n
 change_n = 1
@@ -158,6 +157,7 @@ def display_2():
     global change_n
     global charater
     global monsters
+    global figth
     # player_list = [1, 2, 3]
     skill_list = ["공격"]+skills_that_have(charater)
     print(skill_list)
@@ -201,6 +201,9 @@ def display_2():
         key_zero = True
         reset_global(2, 2)
         enter_on = False
+        # 전투
+        figth = True
+
         pass
     return 2
 
@@ -210,20 +213,29 @@ global tab_on
 tab_on = False
 
 
-def display_infos():
-    global tab_on
-    if (tab_on):
-        print("info")
-
-    # display
+# display
 displayer_dic = {1: display_1,
                  2: display_2
                  }
 
-#### display1######################
+
+def display_infos():
+    global tab_on
+    global charater
+    global monsters
+    if (tab_on):
+        charater.show_detail()
 
 
-# 3
+global figth
+figth = False
+
+
+def figth_infos():
+    global figth
+    if figth:
+        print("figth")
+
 
 ############## 게임시작#########################
 listener = keyboard.Listener(
@@ -240,6 +252,7 @@ display_n = 1
 enter_on = False
 while isActive:
     os.system('cls')
+    figth_infos()
     display_infos()
     display_n = displayer_dic[display_n]()
     time.sleep(0.05)
