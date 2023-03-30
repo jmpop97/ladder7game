@@ -27,12 +27,13 @@ class Monster:
 
         return random.choice(Monster.monster_types[monster_level])
 
-    def attack_player(self, player):
-        damage = self.attack - player.defense if not player.defense_mode else self.attack // 2 - player.defense
-        if damage < 0:
-            damage = 0
-        player.hp -= damage
-        print(f"{self.type}이(가) {player.name}에게 {damage}의 피해를 입혔습니다.")
+def attack_player(self, player):
+    damage = self.attack - player.defense
+    if damage < 0:
+        damage = 0
+    player.hp -= damage
+    print(f"{self.type}이(가) {player.name}에게 {damage}의 피해를 입혔습니다.")
+
 
 
 class MonsterGenerator:
