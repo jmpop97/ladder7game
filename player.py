@@ -154,7 +154,7 @@ class Monster(BaseCharacter):
 # 몬스터
 
 
-jobs = ['Archer', 'Archer', 'Mage', 'Thief']
+jobs = ['Archer', 'Warrior', 'Mage', 'Thief']
 jobs_data = ['player1', 'player2', 'player3', 'player4']
 
 

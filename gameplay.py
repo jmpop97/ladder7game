@@ -127,6 +127,7 @@ def display_1():
 
     print("캐릭터선택"+str(char_num))
     print(list(map(lambda x: jobs_data[x-1].name, char_list)))
+    charater_list = list(map(lambda x: jobs_data[x-1].name, char_list))
     # print(char_list)
     # 캐릭터 번호별 선택
     # print([key_n, key_m])
