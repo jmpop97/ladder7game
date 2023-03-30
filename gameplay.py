@@ -82,6 +82,7 @@ def reset_global(key_range_n):
 def display_1():
     global key_n
     global enter_on
+    global key_zero
 
     charater_range = 4  # 명
 
@@ -91,6 +92,8 @@ def display_1():
     charater_n = key_n
     select_charater(charater_n)
     if (enter_on):
+        enter_on = False
+        key_zero = True
         return 2
     else:
         return 1
