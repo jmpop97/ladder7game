@@ -18,7 +18,7 @@ key_range = 4
 key_m = 1
 key_range_v = 2
 
-# 키보드
+# 키보드 in
 
 
 def on_press(key):
@@ -27,6 +27,7 @@ def on_press(key):
     global key_m
     global key_range_v
     global enter_on
+    global tab_on
     try:
         key_n_in = re.sub(r'[^0-9]', '', '{0}'.format(
             key.char))
@@ -55,11 +56,15 @@ def on_press(key):
             key_n -= 2
             key_n = key_n % key_range
             key_n += 1
-        if (key == keyboard.Key.enter):
+        elif (key == keyboard.Key.enter):
             enter_on = True
-        # print(key_n)
+        elif (key == keyboard.Key.tab):
+            if tab_on:
+                tab_on = False
+            else:
+                tab_on = True
 
-# 종료
+# 키보드 out
 
 
 def on_release(key):
@@ -67,6 +72,7 @@ def on_release(key):
         global isActive
         isActive = False
         return False
+
 
 # 리스너 등록방법1
 # with keyboard.Listener(
@@ -76,24 +82,17 @@ def on_release(key):
 #
 
 
-def reset_global_n(key_range_n, n):
+def reset_global_n(key_range_n, key_range_m):
     global key_zero
     global key_n
     global key_range
-
-    if key_zero:
-        key_n = n
-        key_range = key_range_n
-        key_zero = False
-
-
-def reset_global_m(key_range_m, m):
-
-    global key_zero
     global key_m
     global key_range_v
+
     if key_zero:
-        key_m = m
+        key_n = 1
+        key_range = key_range_n
+        key_m = 1
         key_range_v = key_range_m
         key_zero = False
 
@@ -122,8 +121,7 @@ def display_1():
     charater_range = 4  # 명
     select_charaters = 4  # 선택창 4명
 
-    reset_global_n(4, 1)
-    reset_global_m(2, 1)
+    reset_global_n(4, 2)
 
     print("캐릭터선택"+str(char_num))
     print(list(map(lambda x: jobs_data[x-1].name, char_list)))
@@ -150,11 +148,22 @@ def display_1():
 
 
 def display_2():
-    print("몬스터")
+
+    print([key_n, key_m])
     return 2
 
 
-# display
+global tab_on
+tab_on = False
+
+
+def display_infos():
+    global tab_on
+    if (tab_on):
+        print("info")
+
+
+    # display
 displayer_dic = {1: display_1,
                  2: display_2
                  }
@@ -176,6 +185,7 @@ enter_on = False
 while isActive:
     os.system('cls')
     display_n = displayer_dic[display_n]()
+    display_infos()
     time.sleep(0.05)
     pass
 
