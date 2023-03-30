@@ -2,8 +2,8 @@ import random
 
 
 class BaseCharacter:
-    def __init__(self):
-        self.name = 'defaultCharacterName'
+    def __init__(self, name):
+        self.name = name
         self.max_hp = 100
         self.hp = 100
         self.max_mp = 50
@@ -31,8 +31,8 @@ class BaseCharacter:
 
 
 class Warrior(BaseCharacter):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name):
+        super().__init__(name)
         self.max_hp += 20
         self.hp += 20
         self._str += 15
@@ -49,8 +49,8 @@ class Warrior(BaseCharacter):
 
 
 class Mage(BaseCharacter):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name):
+        super().__init__(name)
         self.max_hp += 10
         self.hp += 10
         self._str += -5
@@ -86,8 +86,8 @@ class Mage(BaseCharacter):
 
 
 class Thief(BaseCharacter):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name):
+        super().__init__(name)
         self._str += 5
         self.arm += 2
         self.spd += 12
@@ -113,8 +113,8 @@ class Thief(BaseCharacter):
 
 
 class Archer(BaseCharacter):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name):
+        super().__init__(name)
         self.max_hp += 8
         self.hp += 8
         self._str += 7
@@ -148,4 +148,6 @@ job_dic = {"Archer": Archer,
            "Mage": Mage,
            "Thief": Thief}
 
-# job_dic["Archer"]().show_detail()
+job_dic["Archer"]("이름").show_detail()
+a = Archer("sadf")
+print(a)

@@ -1,5 +1,5 @@
 import random
-
+from player import *
 
 
 class Monster:
@@ -26,6 +26,14 @@ class Monster:
             monster_level = "고급"
 
         return random.choice(Monster.monster_types[monster_level])
+
+    def attack_player(self, player):
+        damage = self.attack - player.defense
+        if damage < 0:
+            damage = 0
+        player.hp -= damage
+        print(f"{self.type}이(가) {player.name}에게 {damage}의 피해를 입혔습니다.")
+
 
 
 class MonsterGenerator:
