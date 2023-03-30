@@ -125,10 +125,11 @@ def display_1():
     reset_global_n(4, 1)
     reset_global_m(2, 1)
 
-    print(char_num)
-    print(char_list)
+    print("캐릭터선택"+str(char_num))
+    print(list(map(lambda x: jobs_data[x-1].name, char_list)))
+    # print(char_list)
     # 캐릭터 번호별 선택
-    print([key_n, key_m])
+    # print([key_n, key_m])
     if (key_m == 1):
         if change_m:
             key_n = 1
@@ -174,7 +175,7 @@ enter_on = False
 while isActive:
     os.system('cls')
     display_n = displayer_dic[display_n]()
-    time.sleep(0.1)
+    time.sleep(0.05)
     pass
 
 print("종료했습니다.")
