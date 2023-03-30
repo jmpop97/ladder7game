@@ -1,4 +1,6 @@
 from player import *
+
+
 # 물약 공통 클래스
 
 
@@ -138,10 +140,12 @@ ring = MpItem("반지", 10)
 # 아이템 종류: 검(힘 10 증가), 방패(방어력 10 증가), 지팡이(지능 10 증가), 신발(스피드 10 증가), 목걸이(최대 체력 10 증가), 반지(최대 마력 10 증가)
 # 아이템 착용: 검 = sword.get("착용자") 방패 = shield.get("착용자") 지팡이 = staff.get("착용자") 신발 = shoe.get("착용자") 목걸이 = necklace.get("착용자") 반지 = ring.get("착용자")
 
-a = Archer()
-a.show_detail
-# red_portion.get()
-# red_portion.use(a)
-a.show_detail
-# red_portion.use(a)
-a.show_detail
+ar = Archer()
+ar.hp -= 8
+ar.status
+red_portion.get()
+red_portion.use(ar)
+ar.show_detail
+red_portion.get()
+red_portion.use(ar)
+ar.show_detail
