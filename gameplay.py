@@ -122,12 +122,11 @@ def display_1():
     reset_global_n(4, 2)
 
     print("직업선택선택")
-    print(jobs_data[key_n-1].name)
-    charater_list = jobs_data[key_n-1].show_detail()
+    charater = job_dic[jobs[key_n-1]](player_name).show_detail()
     # print(char_list)
     # 캐릭터 번호별 선택
     # print([key_n, key_m])
-    print(key_n)
+    # print(key_n)
     if (enter_on):
         enter_on = False
         key_zero = True
@@ -179,12 +178,15 @@ displayer_dic = {1: display_1,
 
 
 # 3
+
+############## 게임시작#########################
 listener = keyboard.Listener(
     on_press=on_press,
     on_release=on_release)
 listener.start()
 
 print("실행중입니다.")
+player_name = input("사용자 이름 : ")
 isActive = True
 key_zero = True
 display_n = 1
