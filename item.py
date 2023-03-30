@@ -51,14 +51,14 @@ class Item:
         self.name = name
         self.effect = effect
 
-# str 능력치를 올려주는 아이템
+# _str 능력치를 올려주는 아이템
 
 
 class StrItem(Item):
     # .get 메소드로 소유자 지정해서 장착 가능! self.effect만큼 능력치 증가
     def get(self, owner):
         print(f"{owner.name}에게 {self.name}을(를) 장착했습니다.")
-        owner.str += self.effect
+        owner._str += self.effect
 
 # arm 능력치를 올려주는 아이템
 
@@ -76,7 +76,7 @@ class IntItem(Item):
     # .get 메소드로 소유자 지정해서 장착 가능! self.effect만큼 능력치 증가
     def get(self, owner):
         print(f"{owner.name}에게 {self.name}을(를) 장착했습니다.")
-        owner.int += self.effect
+        owner._int += self.effect
 
 # spd 능력치를 올려주는 아이템
 
