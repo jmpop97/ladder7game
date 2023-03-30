@@ -1,4 +1,7 @@
+from player import *
 # 물약 공통 클래스
+
+
 class Portion:
     def __init__(self, name, effect):
         # 물약 이름, 효과, 양 지정
@@ -21,9 +24,15 @@ class HpPortion(Portion):
             print(f"{self.name}이 부족합니다.")
             return False
         else:
-            print(f"{self.name}을 사용 하셨습니다. {owner.name}의 HP를 {self.effect}만큼 회복합니다.")
-            owner.hp += self.effect
-            self.amount -= 1
+            if owner.hp >= owner.max_hp:
+                print(f"{owner.name}의 HP가 최대입니다.")
+                return False
+            else:
+                print(
+                    f"{self.name}을 사용 하셨습니다. {owner.name}의 HP를 {self.effect}만큼 회복합니다.")
+                owner.hp = min(owner.hp+self.effect, owner.max_hp)
+                self.amount -= 1
+                return True
 
 # 마력 물약 클래스
 
@@ -128,3 +137,11 @@ ring = MpItem("반지", 10)
 # --아이템 사용법---
 # 아이템 종류: 검(힘 10 증가), 방패(방어력 10 증가), 지팡이(지능 10 증가), 신발(스피드 10 증가), 목걸이(최대 체력 10 증가), 반지(최대 마력 10 증가)
 # 아이템 착용: 검 = sword.get("착용자") 방패 = shield.get("착용자") 지팡이 = staff.get("착용자") 신발 = shoe.get("착용자") 목걸이 = necklace.get("착용자") 반지 = ring.get("착용자")
+
+a = Archer()
+a.show_detail
+# red_portion.get()
+# red_portion.use(a)
+a.show_detail
+# red_portion.use(a)
+a.show_detail
