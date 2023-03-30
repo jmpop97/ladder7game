@@ -1,52 +1,192 @@
-import random
+from pynput import keyboard
+import re
+import os
+import time
+from player import *
 
 
-class BaseCharacter:
-    def __init__(self, name, hp, mp, str, arm, int, spd):
-        self.name = name
-        self.max_hp = hp
-        self.hp = hp
-        self.max_mp = mp
-        self.mp = mp
-        self.str = str
-        self.arm = arm
-        self.int = int
-        self.spd = spd
-        pass
+global key_zero
+global key_n
+global key_range
+global key_m
+global key_range_v
 
-    def status(self):
-        print(f"{self.name}: Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}")
+global enter_on
+global isActive
+key_n = 1
+key_range = 4
+key_m = 1
+key_range_v = 2
 
-    def attack(self, other):
-        damage = random.randint(self.str, self.str*)
-        other.hp = max(other.hp - damage, 0)
-        print(f"{self.name}의 공격! {other.name}에게 {damage}의 데미지를 입혔습니다.")
-        if other.hp == 0:
-            print(f"{other.name}이(가) 쓰러졌습니다.")
+# 키보드 in
 
 
-class Player(BaseCharacter):
+def on_press(key):
+    global key_n
+    global key_range
+    global key_m
+    global key_range_v
+    global enter_on
+    global tab_on
+    try:
+        key_n_in = re.sub(r'[^0-9]', '', '{0}'.format(
+            key.char))
+        if key_n_in == "":
+            pass
+        else:
+            key_n = int(key_n_in)
+            if key_range < key_n:
+                key_n = key_range
+            elif 0 == key_n:
+                key_n = 1
+            # print(key_n)
+    except AttributeError:
+        if (key == keyboard.Key.up):
+            key_m = key_m % key_range_v
+            key_m += 1
+
+        elif (key == keyboard.Key.down):
+            key_m -= 2
+            key_m = key_m % key_range_v
+            key_m += 1
+        elif (key == keyboard.Key.right):
+            key_n = key_n % key_range
+            key_n += 1
+        elif (key == keyboard.Key.left):
+            key_n -= 2
+            key_n = key_n % key_range
+            key_n += 1
+        elif (key == keyboard.Key.enter):
+            enter_on = True
+        elif (key == keyboard.Key.tab):
+            if tab_on:
+                tab_on = False
+            else:
+                tab_on = True
+
+# 키보드 out
+
+
+def on_release(key):
+    if key == keyboard.Key.esc:  # esc 키가 입력되면 종료
+        global isActive
+        isActive = False
+        return False
+
+
+# 리스너 등록방법1
+# with keyboard.Listener(
+#        on_press=on_press, on_release=on_release) as listener:
+#    listener.join()
+
+#
+
+
+def reset_global_n(key_range_n, key_range_m):
+    global key_zero
+    global key_n
+    global key_range
+    global key_m
+    global key_range_v
+
+    if key_zero:
+        key_n = 1
+        key_range = key_range_n
+        key_m = 1
+        key_range_v = key_range_m
+        key_zero = False
+
+
+###########################
+# 캐릭터 선택
+global charaters
+charaters = []
+
+char_list = [1, 1, 1, 1]  # 캐릭터 생성된것
+
+global char_num
+global change_m
+char_num = 1
+change_m = False
+
+
+def display_1():
+    global key_n
+    global key_m
+    global enter_on
+    global key_zero
+    global char_num
+    global change_m
+
+    charater_range = 4  # 명
+    select_charaters = 4  # 선택창 4명
+
+    reset_global_n(4, 2)
+
+    print("캐릭터선택"+str(char_num))
+    print(list(map(lambda x: jobs_data[x-1].name, char_list)))
+    charater_list = list(map(lambda x: jobs_data[x-1].name, char_list))
+    # print(char_list)
+    # 캐릭터 번호별 선택
+    # print([key_n, key_m])
+    if (key_m == 1):
+        if change_m:
+            key_n = 1
+            change_m = False
+        char_num = key_n
+    elif (key_m == 2):
+        char_list[char_num-1] = key_n
+        change_m = True
+    if (enter_on):
+        enter_on = False
+        key_zero = True
+
+        return 2
+    else:
+        return 1
+#
+
+
+def display_2():
+
+    print([key_n, key_m])
+    return 2
+
+
+global tab_on
+tab_on = False
+
+
+def display_infos():
+    global tab_on
+    if (tab_on):
+        print("info")
+
+
+    # display
+displayer_dic = {1: display_1,
+                 2: display_2
+                 }
+
+#### display1######################
+
+
+# 3
+listener = keyboard.Listener(
+    on_press=on_press,
+    on_release=on_release)
+listener.start()
+
+print("실행중입니다.")
+isActive = True
+key_zero = True
+display_n = 1
+enter_on = False
+while isActive:
+    os.system('cls')
+    display_n = displayer_dic[display_n]()
+    display_infos()
+    time.sleep(0.05)
     pass
 
-
-class Monster(BaseCharacter):
-    pass
-
-
-# start game
-
-# 직업선택
-
-# output: charaters=[직업1,직업2,...]
-
-# 몬스터 생성
-stage_monster = {1: [""],
-                 2: [""]}
-
-# 스테이지 시작
-stage_n = 1
-stage(charaters, stage_monster[stage_n])
-# 현재상태 출력
-# 공격순서list
-# 공격순서list순 공격
-# 승리 시 보상
+print("종료했습니다.")
