@@ -2,16 +2,16 @@ import random
 
 
 class BaseCharacter:
-    def __init__(self, name, hp, mp, _str, arm, _int, spd):
-        self.name = name
-        self.max_hp = hp
-        self.hp = hp
-        self.max_mp = mp
-        self.mp = mp
-        self._str = _str
-        self.arm = arm
-        self._int = _int
-        self.spd = spd
+    def __init__(self):
+        self.name = 'defaultCharacterName'
+        self.max_hp = 100
+        self.hp = 100
+        self.max_mp = 50
+        self.mp = 50
+        self._str = 20
+        self.arm = 5
+        self._int = 15
+        self.spd = 5
 
     def status(self):
         print(f"{self.name}: Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}")
@@ -27,15 +27,17 @@ class BaseCharacter:
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
 
+# 베이스 캐릭터
+
 
 class Warrior(BaseCharacter):
-    def __init__(self, name, hp, mp, _str, arm, _int, spd):
-        super().__init__(name, hp, mp, _str, arm, _int, spd)
-        self.max_hp = hp + 20
-        self.hp = hp + 20
-        self._str = _str + 15
-        self.arm = arm + 5
-        self.spd = spd - 2
+    def __init__(self):
+        super().__init__()
+        self.max_hp += 20
+        self.hp += 20
+        self._str += 15
+        self.arm += 5
+        self.spd += - 2
 
     def power_attack(self, other):
         damage = random.randint(self._str*0.8, self._str*1.2)
@@ -45,25 +47,18 @@ class Warrior(BaseCharacter):
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
 
-    def gaurd(self):
-        self.gaurdstack += 1
-        self.arm += self.gaurdstack*4
-        print(f"{self.name}이 공격을 방어합니다! {self.name}의 방어력이 {self.arm}상승")
-
-        # 방어력이 계속 올라감 가드스택을 초기화 해줘야 함
-
 
 class Mage(BaseCharacter):
-    def __init__(self, name, hp, mp, _str, arm, _int, spd):
-        super().__init__(name, hp, mp, _str, arm, _int, spd)
-        self.max_hp = hp - 10
-        self.hp = hp - 10
-        self._str = _str - 15
-        self.arm = arm - 1
-        self.spd = spd + 2
-        self.max_mp = mp + 40
-        self.mp = mp + 40
-        self._int = _int + 25
+    def __init__(self):
+        super().__init__()
+        self.max_hp += 10
+        self.hp += 10
+        self._str += -5
+        self.arm += -1
+        self.spd += 2
+        self.max_mp += 40
+        self.mp += 40
+        self._int += 25
 
     def fire_magic(self, other):
         damage = random.randint(self._int*0.8, self._int*1.2)
@@ -75,11 +70,11 @@ class Mage(BaseCharacter):
 
     def wind_magic(self, other):
         damage1 = random.randint(
-            (self._int - other.arm)*0.3, (self._int - other.arm)*0.7)
+            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
         damage2 = random.randint(
-            (self._int - other.arm)*0.3, (self._int - other.arm)*0.7)
+            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
         damage3 = random.randint(
-            (self._int - other.arm)*0.3, (self._int - other.arm)*0.7)
+            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
 
         damage = damage1 + damage2 + damage3
         other.hp = max(other.hp - damage, 0)
@@ -91,89 +86,66 @@ class Mage(BaseCharacter):
 
 
 class Thief(BaseCharacter):
-    def __init__(self, name, hp, mp, _str, arm, _int, spd):
-        super().__init__(name, hp, mp, _str, arm, _int, spd)
-        self._str = _str + 5
-        self.arm = arm + 2
-        self.spd = spd + 12
+    def __init__(self):
+        super().__init__()
+        self._str += 5
+        self.arm += 2
+        self.spd += 12
         self.hide = False
+        if self.hide == True:
+            self.spd == 99
+            print(f"{self.name}은 은신했습니다. 무조건 선공함")
+
+    def attack(self, other):
+        super().attack()
 
     def hide(self):
         self.hide = True
-        self.spd += 5
-        print(f"{self.name}은 은신했습니다. spd가 {5}만큼 상승")
 
     def hide_attack(self, other):
-        damage = random.randint((self._str + self.spd)
-                                * 1.6, (self._str + self.spd)*2.4)
+        damage = random.randint(
+            int((self._str + self.spd)*1.6), int((self._str + self.spd)*2.4))
         other.hp = max(other.hp - damage, 0)
         print(f"{self.name}의 은신공격! {other.name}에게 {damage}의 치명적인 데미지를 입혔습니다.")
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
-
         self.hide = False
-        self.spd -= 5
 
 
 class Archer(BaseCharacter):
-    def __init__(self, name, hp, mp, _str, arm, _int, spd):
-        super().__init__(name, hp, mp, _str, arm, _int, spd)
-        self.max_hp = hp + 7
-        self.hp = hp + 7
-        self._str = _str + 7
-        self.arm = arm + 2
-        self.spd = spd + 7
+    def __init__(self):
+        super().__init__()
+        self.max_hp += 8
+        self.hp += 8
+        self._str += 7
+        self.arm += 2
+        self.spd += 7
 
     def silver_arrow_shot(self, other):
-        if other.type == '언데드':
-            damage = random.randint(
-                int(self._str+self.spd)*1.8, int(self._str+self.spd)*2.2)
-            other.hp = max(other.hp - damage, 0)
-            print(
-                f"{self.name}의 은화살공격! {other.name}은 언데드라 {damage}의 치명적인 데미지를 입었습니다.")
-        else:
-            damage = random.randint(
-                int(self._str+self.spd)*0.8, int(self._str+self.spd)*1.2)
-            other.hp = max(other.hp - damage, 0)
-            print(f"{self.name}의 은화살공격! {other.name}은 {damage}의 데미지를 입었습니다.")
+        damage = random.randint(int(self._str+self.spd)
+                                * 1.8, int(self._str+self.spd)*2.2)
+        other.hp = max(other.hp - damage, 0)
+        print(f"{self.name}의 은화살공격! {other.name}은 {damage}의 치명적인 트루데미지를 입었습니다.")
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
 
-# 실험용
-
-
-class Monster(BaseCharacter):
-    def __init__(self, name, hp, mp, _str, arm, _int, spd):
-        super().__init__(name, hp, mp, _str, arm, _int, spd)
-        self.max_hp = hp + 7
-        self.hp = hp + 7
-        self._str = _str + 7
-        self.arm = arm + 2
-        self.spd = spd + 7
-        self.type = '언데드'
-# 몬스터
-
 
 jobs = ['Archer', 'Warrior', 'Mage', 'Thief']
-jobs_data = ['player1', 'player2', 'player3', 'player4']
 
 
-for i in [0, 1, 2, 3]:
-    if jobs[i] == 'Archer':
-        jobs_data[i] = Archer('archer', 100, 100, 20, 5, 10, 5)
-    elif jobs[i] == 'Warrior':
-        jobs_data[i] = Warrior('Warrior', 100, 100, 20, 5, 10, 5)
-    elif jobs[i] == 'Mage':
-        jobs_data[i] = Mage('Mage', 100, 100, 20, 5, 10, 5)
-    elif jobs[i] == 'Thief':
-        jobs_data[i] = Thief('Thief', 100, 100, 20, 5, 10, 5)
+# for i in [0, 1, 2, 3]:
+# if jobs[i] == 'Archer':
+#        jobs_data[i] = Archer('archer', 100, 100, 20, 5, 10, 5)
+#    elif jobs[i] == 'Warrior':
+#        jobs_data[i] = Warrior('Warrior', 100, 100, 20, 5, 10, 5)
+#    elif jobs[i] == 'Mage':
+#     jobs_data[i] = Mage('Mage', 100, 100, 20, 5, 10, 5)
+# elif jobs[i] == 'Thief':
+#     jobs_data[i] = Thief('Thief', 100, 100, 20, 5, 10, 5)
 
+job_dic = {"Archer": Archer,
+           "Warrior": Warrior,
+           "Mage": Mage,
+           "Thief": Thief}
 
-# mon1 = Monster('언데드 아처', 1, 1, 1, 1, 1, 1)
-
-
-# # 메인에서 jobs = 'Archer' 보네면 ,
-
-player1 = Archer('archerkim', 100, 100, 20, 5, 10, 5)
-
-print(jobs_data[1].name)
+# job_dic["Archer"]().show_detail()

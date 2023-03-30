@@ -102,8 +102,6 @@ def reset_global_n(key_range_n, key_range_m):
 global charaters
 charaters = []
 
-char_list = [1, 1, 1, 1]  # 캐릭터 생성된것
-
 global char_num
 global change_m
 char_num = 1
@@ -123,20 +121,13 @@ def display_1():
 
     reset_global_n(4, 2)
 
-    print("캐릭터선택"+str(char_num))
-    print(list(map(lambda x: jobs_data[x-1].name, char_list)))
-    charater_list = list(map(lambda x: jobs_data[x-1].name, char_list))
+    print("직업선택선택")
+    print(jobs_data[key_n-1].name)
+    charater_list = jobs_data[key_n-1].show_detail()
     # print(char_list)
     # 캐릭터 번호별 선택
     # print([key_n, key_m])
-    if (key_m == 1):
-        if change_m:
-            key_n = 1
-            change_m = False
-        char_num = key_n
-    elif (key_m == 2):
-        char_list[char_num-1] = key_n
-        change_m = True
+    print(key_n)
     if (enter_on):
         enter_on = False
         key_zero = True
@@ -148,11 +139,27 @@ def display_1():
 
 
 def display_2():
-
+    global key_n
+    global key_m
+    global enter_on
+    global key_zero
+    global char_num
+    global change_m
+    reset_global_n(3, 2)
+    if (key_m == 1):
+        if change_m:
+            key_n = 1
+            change_m = False
+        char_num = key_n
+    elif (key_m == 2):
+        char_list[char_num-1] = key_n
+        change_m = True
     print([key_n, key_m])
+    print(char_list)
     return 2
 
 
+# tab눌르면 정보 뛰우기
 global tab_on
 tab_on = False
 
