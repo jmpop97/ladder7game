@@ -29,7 +29,7 @@ class Monster:
 
 
 def attack_player(self, player):
-    damage = self._str - player.defense
+    damage = self._str - player._arm
     if damage < 0:
         damage = 0
     player.hp -= damage
