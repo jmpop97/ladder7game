@@ -42,13 +42,9 @@ def on_press(key):
             # print(key_n)
     except AttributeError:
         if (key == keyboard.Key.up):
-            key_m = key_m % key_range_v
             key_m += 1
-
         elif (key == keyboard.Key.down):
-            key_m -= 2
-            key_m = key_m % key_range_v
-            key_m += 1
+            key_m -= 1
         elif (key == keyboard.Key.right):
             key_n = key_n % key_range
             key_n += 1
@@ -63,8 +59,11 @@ def on_press(key):
                 tab_on = False
             else:
                 tab_on = True
-
 # 키보드 out
+        if key_m < 1:
+            key_m = 1
+        elif key_m > key_range:
+            key_m = key_range
 
 
 def on_release(key):
@@ -82,7 +81,7 @@ def on_release(key):
 #
 
 
-def reset_global_n(key_range_n, key_range_m):
+def reset_global(key_range_n, key_range_m):
     global key_zero
     global key_n
     global key_range
@@ -119,10 +118,11 @@ def display_1():
     charater_range = 4  # 명
     select_charaters = 4  # 선택창 4명
 
-    reset_global_n(4, 2)
+    reset_global(4, 3)
 
     print("직업선택선택")
-    charater = job_dic[jobs[key_n-1]](player_name).show_detail()
+
+    job_dic[jobs[key_n-1]](player_name).show_detail()
     # print(char_list)
     # 캐릭터 번호별 선택
     # print([key_n, key_m])
@@ -130,7 +130,7 @@ def display_1():
     if (enter_on):
         enter_on = False
         key_zero = True
-
+        charater = job_dic[jobs[key_n-1]](player_name)
         return 2
     else:
         return 1
@@ -147,17 +147,17 @@ def display_2():
     global key_zero
     global char_num
     global change_m
-    reset_global_n(3, 2)
-    if (key_m == 1):
+
+    player_list = [1, 2, 3]
+    skill_list = [1, 2]
+
+    reset_global(3, 2)
+    if key_m == 1:
+        change_m = True
+    if key_m == 2:
         if change_m:
             key_n = 1
             change_m = False
-        char_num = key_n
-    elif (key_m == 2):
-        char_list[char_num-1] = key_n
-        change_m = True
-    print([key_n, key_m])
-    print(char_list)
     return 2
 
 
@@ -196,8 +196,8 @@ display_n = 1
 enter_on = False
 while isActive:
     os.system('cls')
-    display_n = displayer_dic[display_n]()
     display_infos()
+    display_n = displayer_dic[display_n]()
     time.sleep(0.05)
     pass
 

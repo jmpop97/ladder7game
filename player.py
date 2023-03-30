@@ -1,9 +1,10 @@
 import random
 import inspect
 
+
 class BaseCharacter:
-    def __init__(self):
-        self.name = 'defaultCharacterName'
+    def __init__(self, name):
+        self.name = name
         self.max_hp = 100
         self.hp = 100
         self.max_mp = 50
@@ -27,29 +28,30 @@ class BaseCharacter:
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
 
-#베이스 캐릭터 
+# 베이스 캐릭터
+
 
 class Warrior(BaseCharacter):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name):
+        super().__init__(name)
         self.max_hp += 20
         self.hp += 20
         self._str += 15
-        self.arm += 5 
+        self.arm += 5
         self.spd += - 2
 
     def power_attack(self, other):
         damage = random.randint(self._str*0.8, self._str*1.2)
         other.hp = max(other.hp - damage, 0)
-        self.mp = max(self.mp - 5, 0)  
+        self.mp = max(self.mp - 5, 0)
         print(f"{self.name}의 파워 공격! {other.name}에게 {damage}의 데미지를 입혔습니다.")
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
-    
-  
+
+
 class Mage(BaseCharacter):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name):
+        super().__init__(name)
         self.max_hp += 10
         self.hp += 10
         self._str += -5
@@ -62,45 +64,49 @@ class Mage(BaseCharacter):
     def fire_magic(self, other):
         damage = random.randint(self._int*0.8, self._int*1.2)
         other.hp = max(other.hp - damage, 0)
-        self.mp = max(self.mp - 5, 0)  
+        self.mp = max(self.mp - 5, 0)
         print(f"{self.name}의 화염 마법! {other.name}에게 {damage}의 데미지를 입혔습니다.")
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
 
     def wind_magic(self, other):
-        damage1 = random.randint(int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
-        damage2 = random.randint(int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
-        damage3 = random.randint(int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
+        damage1 = random.randint(
+            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
+        damage2 = random.randint(
+            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
+        damage3 = random.randint(
+            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
 
         damage = damage1 + damage2 + damage3
         other.hp = max(other.hp - damage, 0)
-        self.mp = max(self.mp - 5, 0)  
-        print(f"{self.name}의 바람 마법! {other.name}에게 {damage1}, {damage2}, {damage3}의 데미지를 입혔습니다.")
+        self.mp = max(self.mp - 5, 0)
+        print(
+            f"{self.name}의 바람 마법! {other.name}에게 {damage1}, {damage2}, {damage3}의 데미지를 입혔습니다.")
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
 
 
 class Thief(BaseCharacter):
-    def __init__(self):
-        super().__init__()
-        self._str +=  5
+    def __init__(self, name):
+        super().__init__(name)
+        self._str += 5
         self.arm += 2
         self.spd += 12
         self.hide = False
         if self.hide == True:
-                self.spd == 99
-                print(f"{self.name}은 은신했습니다. 무조건 선공함")
-        
+            self.spd == 99
+            print(f"{self.name}은 은신했습니다. 무조건 선공함")
+
     def attack(self, other):
         super().attack()
-        
 
     def hide(self):
         self.hide = True
 
     def hide_attack(self, other):
         if self.hide == True:
-            damage = random.randint(int((self._str + self.spd)*1.6) , int((self._str + self.spd)*2.4))
+            damage = random.randint(
+                int((self._str + self.spd)*1.6), int((self._str + self.spd)*2.4))
             other.hp = max(other.hp - damage, 0)
             print(f"{self.name}의 은신공격! {other.name}에게 {damage}의 치명적인 데미지를 입혔습니다.")
             if other.hp == 0:
@@ -108,51 +114,40 @@ class Thief(BaseCharacter):
             self.hide = False
         elif self.hide == False:
             print("은신 상태가 아니라서 쓸 수가 없고 당신의 행동은 무효가됨")
-        
-        
-        
+
+
 class Archer(BaseCharacter):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name):
+        super().__init__(name)
         self.max_hp += 8
         self.hp += 8
         self._str += 7
         self.arm += 2
         self.spd += 7
-    
+
     def silver_arrow_shot(self, other):
-        damage = random.randint(int(self._str+self.spd)*1.8, int(self._str+self.spd)*2.2)
+        damage = random.randint(int(self._str+self.spd)
+                                * 1.8, int(self._str+self.spd)*2.2)
         other.hp = max(other.hp - damage, 0)
         print(f"{self.name}의 은화살공격! {other.name}은 {damage}의 치명적인 트루데미지를 입었습니다.")
         if other.hp == 0:
             print(f"{other.name}이(가) 쓰러졌습니다.")
 
-# 실험용 
-
-class Monster(BaseCharacter):
-    def __init__(self):
-        super().__init__()
-        self.max_hp = 100
-        self.hp = 100
-        self._str = 100
-        self.spd = 100
-        self.type = '언데드'
-
-mon1 = Monster()
-
-#실험용 몬스터
+# 실험용
 
 
-a = Archer()
-b = Thief()
-d = Warrior()
-c = Mage()
+# 실험용 몬스터
+a = Archer("Archer")
+b = Thief("Thief")
+d = Warrior("Warrior")
+c = Mage("Mage")
+
 
 def skills_that_have(player):
     skills = []
     if type(player) == Archer:
         skills.append("은화살")
-    elif type(player ) == Warrior:
+    elif type(player) == Warrior:
         skills.append("파워공격")
     elif type(player) == Mage:
         skills.append("화염마법")
@@ -164,22 +159,27 @@ def skills_that_have(player):
         print("혹시 전직을 안했나?")
     return skills
 
+
+jobs = ['Archer', 'Warrior', 'Mage', 'Thief']
+job_dic = {"Archer": Archer,
+           "Warrior": Warrior,
+           "Mage": Mage,
+           "Thief": Thief}
 # 플레이어를 임력하면 가지고 있는 스킬목록을 리스트로 반환
 
-print(skills_that_have(a))
-print(skills_that_have(b))
-print(skills_that_have(c))
-print(skills_that_have(d))
+# print(skills_that_have(a))
+# print(skills_that_have(b))
+# print(skills_that_have(c))
+# print(skills_that_have(d))
 
-# 테스트용 코드, a는 궁수, b는 도적 
+# 테스트용 코드, a는 궁수, b는 도적
 # skills_that_have(a) = ["은화살"]
 # skills_that_have(b) = ["은신", "은신공격"]
 
 # 출력
 
-# 몬스터 
+# 몬스터
 
-# jobs = ['Archer', 'Archer', 'Mage', 'Thief']
 
 # list = ['Thief', 'Archer', 'Mage', 'Warrior']
 
@@ -199,7 +199,7 @@ print(skills_that_have(d))
 #         else:
 #             print('잘못입력하셨습니다.')
 #     return players
-    
+
 # makingplayer(list)
 
 
@@ -209,5 +209,4 @@ print(skills_that_have(d))
 
 # print(type('archerkim').__name__)
 
-# 메인에서 jobs = 'Archer' 보네면 , 
-
+# 메인에서 jobs = 'Archer' 보네면 ,
