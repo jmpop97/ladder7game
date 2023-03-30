@@ -2,15 +2,21 @@ from pynput import keyboard
 import re
 import os
 import time
+from player import *
+
 
 global key_zero
 global key_n
 global key_range
+global key_m
+global key_range_v
 
 global enter_on
 global isActive
-key_n = 0
-key_range = 5
+key_n = 1
+key_range = 4
+key_m = 1
+key_range_v = 2
 
 # 키보드
 
@@ -18,6 +24,8 @@ key_range = 5
 def on_press(key):
     global key_n
     global key_range
+    global key_m
+    global key_range_v
     global enter_on
     try:
         key_n_in = re.sub(r'[^0-9]', '', '{0}'.format(
@@ -33,13 +41,13 @@ def on_press(key):
             # print(key_n)
     except AttributeError:
         if (key == keyboard.Key.up):
-            key_n = key_n % key_range
-            key_n += 1
+            key_m = key_m % key_range_v
+            key_m += 1
 
         elif (key == keyboard.Key.down):
-            key_n -= 2
-            key_n = key_n % key_range
-            key_n += 1
+            key_m -= 2
+            key_m = key_m % key_range_v
+            key_m += 1
         elif (key == keyboard.Key.right):
             key_n = key_n % key_range
             key_n += 1
@@ -56,6 +64,7 @@ def on_press(key):
 
 def on_release(key):
     if key == keyboard.Key.esc:  # esc 키가 입력되면 종료
+        global isActive
         isActive = False
         return False
 
@@ -67,34 +76,72 @@ def on_release(key):
 #
 
 
-def reset_global(key_range_n):
+def reset_global_n(key_range_n, n):
     global key_zero
     global key_n
     global key_range
+
     if key_zero:
-        key_n = 1
+        key_n = n
         key_range = key_range_n
+        key_zero = False
+
+
+def reset_global_m(key_range_m, m):
+
+    global key_zero
+    global key_m
+    global key_range_v
+    if key_zero:
+        key_m = m
+        key_range_v = key_range_m
         key_zero = False
 
 
 ###########################
 # 캐릭터 선택
+global charaters
+charaters = []
+
+char_list = [1, 1, 1, 1]  # 캐릭터 생성된것
+
+global char_num
+global change_m
+char_num = 1
+change_m = False
+
+
 def display_1():
     global key_n
+    global key_m
     global enter_on
     global key_zero
+    global char_num
+    global change_m
 
     charater_range = 4  # 명
+    select_charaters = 4  # 선택창 4명
 
-    print("캐릭터를 생성하세요")
-    # 캐릭터 번호별 선택택
-    reset_global(charater_range)
-    charater_n = key_n
-    select_charater(charater_n)
+    reset_global_n(4, 1)
+    reset_global_m(2, 1)
+
+    print(char_num)
+    print(char_list)
+    # 캐릭터 번호별 선택
+    print([key_n, key_m])
+    if (key_m == 1):
+        if change_m:
+            key_n = 1
+            change_m = False
+        char_num = key_n
+    elif (key_m == 2):
+        char_list[char_num-1] = key_n
+        change_m = True
     if (enter_on):
         enter_on = False
         key_zero = True
-        return 2
+
+        return
     else:
         return 1
 #
@@ -111,10 +158,6 @@ displayer_dic = {1: display_1,
                  }
 
 #### display1######################
-
-
-def select_charater(charater_n):
-    print("charater_info"+str(charater_n))
 
 
 # 3
