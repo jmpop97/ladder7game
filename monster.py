@@ -13,7 +13,7 @@ class Monster:
         self.stage = stage
         self.type = self.get_monster_type()
         self.hp = 10 + 5 * stage
-        self.attack = 1 + 2 * stage
+        self._str = 1 + 2 * stage
         self.level = stage
 
     def get_monster_type(self):
@@ -27,13 +27,13 @@ class Monster:
 
         return random.choice(Monster.monster_types[monster_level])
 
-    def attack_player(self, player):
-        damage = self.attack - player.defense
-        if damage < 0:
-            damage = 0
-        player.hp -= damage
-        print(f"{self.type}이(가) {player.name}에게 {damage}의 피해를 입혔습니다.")
 
+def attack_player(self, player):
+    damage = self._str - player.defense
+    if damage < 0:
+        damage = 0
+    player.hp -= damage
+    print(f"{self.type}이(가) {player.name}에게 {damage}의 피해를 입혔습니다.")
 
 
 class MonsterGenerator:
@@ -62,13 +62,21 @@ class MonsterGenerator:
 
 
 # 스테이지 별 몬스터 출력
-list_monster = []
-for stage in range(1, 11):
-    generator = MonsterGenerator(stage)
-    print(f"Stage {stage} 몬스터:")
-    for i, monster in enumerate(generator.monsters):
-        list_monster.append(monster)
-        print(f"{i+1}. {monster.type} (Lv.{monster.level})")
-    print()
+# list_monster = []
+# for stage in range(1, 11):
+#     generator = MonsterGenerator(stage)
+#     print(f"Stage {stage} 몬스터:")
+#     for i, monster in enumerate(generator.monsters):
+#         list_monster.append(monster)
+#         print(f"{i+1}. {monster.type} (Lv.{monster.level})")
+#     print()
+
 
 print(list_monster[0])
+stage = 1
+a = Archer("asdf")
+
+generator = MonsterGenerator(stage)
+print(f"Stage {stage} 몬스터:")
+for i, monster in enumerate(generator.monsters):
+    print(f"{i+1}. {monster.type} (Lv.{monster.level})")

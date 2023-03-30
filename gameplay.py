@@ -137,6 +137,9 @@ def display_1():
 #
 
 
+char_list = [1, 1, 1]
+
+
 def display_2():
     global key_n
     global key_m
