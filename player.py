@@ -148,6 +148,6 @@ job_dic = {"Archer": Archer,
            "Mage": Mage,
            "Thief": Thief}
 
-job_dic["Archer"]("이름").show_detail()
-a = Archer("sadf")
-print(a)
+# job_dic["Archer"]("이름").show_detail()
+# a = Archer("sadf")
+# print(a)
