@@ -141,7 +141,7 @@ def display_1():
         enter_on = False
         key_zero = True
 
-        return
+        return 2
     else:
         return 1
 #

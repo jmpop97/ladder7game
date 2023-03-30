@@ -1,6 +1,7 @@
 import random
 
 
+
 class Monster:
     monster_types = {
         "초급": ["고블린", "스켈레톤", "좀비", "오크", "슬라임"],
@@ -53,9 +54,13 @@ class MonsterGenerator:
 
 
 # 스테이지 별 몬스터 출력
+list_monster = []
 for stage in range(1, 11):
     generator = MonsterGenerator(stage)
     print(f"Stage {stage} 몬스터:")
     for i, monster in enumerate(generator.monsters):
+        list_monster.append(monster)
         print(f"{i+1}. {monster.type} (Lv.{monster.level})")
     print()
+
+print(list_monster[0])
