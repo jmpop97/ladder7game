@@ -1,3 +1,4 @@
+import random
 # 물약 공통 클래스
 
 
@@ -148,4 +149,12 @@ def print_portion_amount():
         f"빨간물약: {red_portion.amount}개 하얀물약: {white_portion.amount}개 파란물약: {blue_portion.amount}개")
 
 
-portion_list = ["빨간물약", "하얀물약", "파란물약"]
+portion_list = [red_portion, white_portion, blue_portion]
+item_list = [sword, shield, staff, shoe, necklace, ring]
+
+
+def get_reward(character):
+    reward1 = random.choice(portion_list)
+    reward2 = random.choice(item_list)
+    reward1.get()
+    reward2.get(character)

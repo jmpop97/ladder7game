@@ -219,11 +219,12 @@ def display_2():
                 clear_game = True
             else:
                 print(f'stage clear')
+                get_reward(charater)
                 monsters = stage_monster(stage)
         else:
             player_death = monster_attack(monsters, charater)
 
-        time.sleep(0.5)
+        time.sleep(3)
     pass
     return 2
 

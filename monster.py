@@ -81,7 +81,6 @@ def delete_monster(monsters):
 
     for monster in monsters:
         if monster.hp <= 0:
-            print(monster.hp)
             print(f"{monster.type} 처치")
             monsters.remove(monster)
 
