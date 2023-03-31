@@ -67,3 +67,9 @@ def stage_monster(stage):
         # print(f"{i+1}. {monster.type} (Lv.{monster.level})")
         monsters.append(monster)
     return monsters
+
+
+def monster_infos(monsters):
+    for i, monster in enumerate(monsters):
+        print(
+            f"{i+1}. 몬스터 이름: {monster.type}, 레벨: {monster.level}, 체력: {monster.hp}, 공격력: {monster._str}")

@@ -250,6 +250,7 @@ def display_infos():
             print("\n info not definition \n")
         else:
             charater.show_detail()
+            monster_infos(monsters)
 
 
 global figth
