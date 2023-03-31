@@ -224,7 +224,6 @@ def display_2():
                 get_reward(charater)
                 charater.hp = charater.max_hp
                 charater.mp = charater.max_mp
-
                 monsters = stage_monster(stage)
         else:
             player_death = monster_attack(monsters, charater)
@@ -235,7 +234,7 @@ def display_2():
 
 
 def print_display(key_m, select_n, selection, skill_list, target_list, portion_str_list):
-    if selection[0] == 3:
+    if selection[0] == len(skill_list):
         action_list = portion_str_list
     else:
         action_list = list(map(lambda x: x.type, target_list))
@@ -255,7 +254,7 @@ def print_display(key_m, select_n, selection, skill_list, target_list, portion_s
 
             text_b = skill_list[selection[0] -
                                 1].center(10) + '\033[1m' + action_list[selection[1]-1].center(10)+'\033[0m'
-    if selection[0] != 3:
+    if selection[0] != len(skill_list):
         action_list = target_list
     print(text_a)
     print(text_b)
