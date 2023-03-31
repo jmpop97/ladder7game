@@ -274,11 +274,3 @@ def skill_use(chara, skill, target_mon):
 # print(type('archerkim').__name__)
 
 # 메인에서 jobs = 'Archer' 보네면 ,
-["포션1", "포션2", "포션3"]
-a = [1]
-b = []
-b.append(a)
-print(b)
-b.remove(a)
-print(b)
-print(len(b) == 0)
