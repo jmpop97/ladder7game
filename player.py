@@ -216,14 +216,14 @@ def skill_use(chara, skill, target_mon):
         print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
 
 
-mon1 = Monster(stage=1)
+# mon1 = Monster(stage=1)
 
-a = Archer("Archer")
-b = Thief("Thief")
-d = Warrior("Warrior")
-c = Mage("Mage")
+# a = Archer("Archer")
+# b = Thief("Thief")
+# d = Warrior("Warrior")
+# c = Mage("Mage")
 
-skill_use(a, '화염마법', mon1)
+# skill_use(a, '화염마법', mon1)
 # skill_use(c, '바람마법', mon1)
 # skill_use(b, '은신', mon1)
 # skill_use(b, '공격', mon1)

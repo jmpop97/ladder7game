@@ -94,3 +94,7 @@ def monster_attack(monsters, charater):
         else:
             result = False
     return result
+
+
+monsters = stage_monster(3)
+print(monsters[0].type)
