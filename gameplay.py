@@ -108,6 +108,8 @@ global char_num
 global change_m
 char_num = 1
 change_m = False
+global stage
+stage = 1
 
 
 def display_1():
@@ -120,6 +122,7 @@ def display_1():
     global charater
     global monsters
     global tab_on
+    global stage
     reset_global(4, 3)
 
     print("직업선택선택")
@@ -133,7 +136,7 @@ def display_1():
         enter_on = False
         key_zero = True
         charater = job_dic[jobs[key_n-1]](player_name)
-        monsters = stage_monster(10)
+        monsters = stage_monster(stage)
         tab_on = True
         return 2
     else:
@@ -160,8 +163,9 @@ def display_2():
     global change_n
     global charater
     global monsters
-    global fight
     global player_death
+    global clear_game
+    global stage
     # player_list = [1, 2, 3]
     skill_list = ["공격"]+skills_that_have(charater)
     # print(skill_list)
@@ -209,9 +213,17 @@ def display_2():
         skill_use(
             charater, skill_list[selection[0] - 1], target_list[selection[1]-1])
         delete_monster(monsters)
-        player_death = monster_attack(monsters, charater)
-        print(player_death)
-        time.sleep(1)
+        if len(monsters) == 0:
+            stage += 1
+            if (stage > 10):
+                clear_game = True
+            else:
+                print(f'stage clear')
+                monsters = stage_monster(stage)
+        else:
+            player_death = monster_attack(monsters, charater)
+
+        time.sleep(0.5)
     pass
     return 2
 
@@ -252,26 +264,16 @@ def display_infos():
     global tab_on
     global charater
     global monsters
+    global stage
 
     if (tab_on):
         if display_n == 1:
             print("\n info not definition \n")
         else:
             charater.show_detail()
+            print(f'stage : {stage}')
             monster_infos(monsters)
             print_portion_amount()
-
-
-global fight
-fight = False
-
-
-def fight_infos():
-    global fight
-    if fight:
-        text = "플레이어가 무언갈 했습니다"+"\n"
-        text = text+"플레이어가 무언갈 했습니다"+"\n"
-        print(text)
 
 
 ############## 게임시작#########################
@@ -288,13 +290,17 @@ key_zero = True
 display_n = 1
 enter_on = False
 player_death = False
+clear_game = False
 while isActive:
     os.system('cls')
-    fight_infos()
+
     display_infos()
     display_n = displayer_dic[display_n]()
     if player_death:
         print("Game Over")
+        break
+    if clear_game:
+        print("Game Clear")
         break
     time.sleep(0.05)
 

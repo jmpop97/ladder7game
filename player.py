@@ -5,7 +5,7 @@ from monster import *
 class BaseCharacter:
     def __init__(self, name):
         self.name = name
-        self.max_hp = 1000
+        self.max_hp = 100
         self.hp = self.max_hp
         self.max_mp = 50
         self.mp = self.max_mp
@@ -15,10 +15,10 @@ class BaseCharacter:
         self.spd = 5
 
     def status(self):
-        print(f"{self.name}: Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}")
+        print(f"{self.name}: Hp {self.hp}/{self.max_hp} MP {self.mp}/{self.max_mp}")
 
     def show_detail(self):
-        print(f'{self.name} 직업:{type(self).__name__}  Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}')
+        print(f'{self.name} 직업:{type(self).__name__}  Hp {self.hp}/{self.max_hp} MP {self.mp}/{self.max_mp}')
         print(f'힘 {self._str} 방어력 {self.arm} 지능 {self._int} 속도 {self.spd}')
 
     def attack(self, other):
@@ -264,3 +264,10 @@ skill_use(a, '화염마법', mon1)
 
 # 메인에서 jobs = 'Archer' 보네면 ,
 ["포션1", "포션2", "포션3"]
+a = [1]
+b = []
+b.append(a)
+print(b)
+b.remove(a)
+print(b)
+print(len(b) == 0)
