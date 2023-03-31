@@ -95,17 +95,19 @@ class Thief(BaseCharacter):
         self.arm += 2
         self.spd += 12
         self.hide = False
-        if self.hide == True:
-            self.spd == 99
 
     def attack(self, other):
         if self.hide == True:
             print(f'{self.name}은 은신상태라서 공격을 할 수 없음')
         else:
-            super.attack(self, other)
+            super().attack(other)
 
     def hiding(self):
         self.hide = True
+        if self.hide == True:
+            self.spd += 99
+            self.arm += 99
+
         print(f"{self.name}은 은신했습니다. 무조건 선공함")
 
     def hide_attack(self, other):
@@ -116,6 +118,8 @@ class Thief(BaseCharacter):
             print(f"{self.name}의 은신공격! {other.type}에게 {damage}의 치명적인 데미지를 입혔습니다.")
             if other.hp == 0:
                 print(f"{other.type}이(가) 쓰러졌습니다.")
+            self.spd -= 99
+            self.arm -= 99
             self.hide = False
         elif self.hide == False:
             print("은신 상태가 아니라서 쓸 수가 없고 당신의 행동은 무효가됨")
@@ -274,3 +278,11 @@ def skill_use(chara, skill, target_mon):
 # print(type('archerkim').__name__)
 
 # 메인에서 jobs = 'Archer' 보네면 ,
+# ["포션1", "포션2", "포션3"]
+# a = [1]
+# b = []
+# b.append(a)
+# print(b)
+# b.remove(a)
+# print(b)
+# print(len(b) == 0)
