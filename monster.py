@@ -27,11 +27,13 @@ class Monster:
         return random.choice(Monster.monster_types[monster_level])
 
     def attack_player(self, player):
-        damage = self._str - player.defense
+        damage = self._str - player.arm
         if damage < 0:
             damage = 0
-        player.hp -= damage
+        player.hp = max(player.hp - damage, 0)
         print(f"{self.type}이(가) {player.name}에게 {damage}의 피해를 입혔습니다.")
+        if player.hp == 0:
+            print(f"{player.name}이(가) 쓰러졌습니다.")
 
 
 class MonsterGenerator:
@@ -73,3 +75,23 @@ def monster_infos(monsters):
     for i, monster in enumerate(monsters):
         print(
             f"{i+1}. 몬스터 이름: {monster.type}, 레벨: {monster.level}, 체력: {monster.hp}, 공격력: {monster._str}")
+
+
+def delete_monster(monsters):
+
+    for monster in monsters:
+        if monster.hp <= 0:
+            print(monster.hp)
+            print(f"{monster.type} 처치")
+            monsters.remove(monster)
+
+
+def monster_attack(monsters, charater):
+    for monster in monsters:
+        monster.attack_player(charater)
+        if (charater.hp <= 0):
+            result = True
+            break
+        else:
+            result = False
+    return result

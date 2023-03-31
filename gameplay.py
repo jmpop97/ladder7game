@@ -133,7 +133,7 @@ def display_1():
         enter_on = False
         key_zero = True
         charater = job_dic[jobs[key_n-1]](player_name)
-        monsters = stage_monster(3)
+        monsters = stage_monster(10)
         tab_on = True
         return 2
     else:
@@ -206,8 +206,12 @@ def display_2():
         # 전투
         skill_use(
             charater, skill_list[selection[0] - 1], target_list[selection[1]-1])
-
-        time.sleep(3)
+        delete_monster(monsters)
+        player_death = monster_attack(monsters, charater)
+        print(player_death)
+        if player_death:
+            "Game Over"
+        time.sleep(1)
     pass
     return 2
 

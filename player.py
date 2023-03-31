@@ -95,7 +95,6 @@ class Thief(BaseCharacter):
         self.hide = False
         if self.hide == True:
             self.spd == 99
-            
 
     def attack(self, other):
         if self.hide == True:
@@ -106,6 +105,7 @@ class Thief(BaseCharacter):
     def hiding(self):
         self.hide = True
         print(f"{self.name}은 은신했습니다. 무조건 선공함")
+
     def hide_attack(self, other):
         if self.hide == True:
             damage = random.randint(
@@ -129,7 +129,8 @@ class Archer(BaseCharacter):
         self.spd += 7
 
     def silver_arrow_shot(self, other):
-        damage = random.randint(int((self._str+self.spd)*1.8), int((self._str+self.spd)*2.2))
+        damage = random.randint(
+            int((self._str+self.spd)*1.8), int((self._str+self.spd)*2.2))
         other.hp = max(other.hp - damage, 0)
         print(f"{self.name}의 은화살공격! {other.type}은 {damage}의 치명적인 트루데미지를 입었습니다.")
         if other.hp == 0:
@@ -178,7 +179,7 @@ def skill_use(chara, skill, target_mon=Monster):
             chara.silver_arrow_shot(target_mon)
         except:
             print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
-    elif skill == '화염마법': 
+    elif skill == '화염마법':
         try:
             chara.fire_magic(target_mon)
         except:
@@ -200,8 +201,9 @@ def skill_use(chara, skill, target_mon=Monster):
             chara.hide_attack(target_mon)
         except:
             print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
-    else: 
+    else:
         print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+
 
 mon1 = Monster(stage=1)
 
@@ -215,7 +217,6 @@ skill_use(a, '화염마법', mon1)
 # skill_use(b, '은신', mon1)
 # skill_use(b, '공격', mon1)
 
-          
 
 # 플레이어를 임력하면 가지고 있는 스킬목록을 리스트로 반환
 
@@ -262,3 +263,4 @@ skill_use(a, '화염마법', mon1)
 # print(type('archerkim').__name__)
 
 # 메인에서 jobs = 'Archer' 보네면 ,
+["포션1", "포션2", "포션3"]
