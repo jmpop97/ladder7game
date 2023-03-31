@@ -4,7 +4,7 @@ import os
 import time
 from player import *
 from monster import *
-
+from item import *
 
 global key_zero
 global key_n
@@ -119,6 +119,7 @@ def display_1():
     global change_m
     global charater
     global monsters
+    global tab_on
     reset_global(4, 3)
 
     print("직업선택선택")
@@ -132,7 +133,8 @@ def display_1():
         enter_on = False
         key_zero = True
         charater = job_dic[jobs[key_n-1]](player_name)
-        monsters = stage_monster(1)
+        monsters = stage_monster(3)
+        tab_on = True
         return 2
     else:
         return 1
@@ -157,7 +159,7 @@ def display_2():
     global change_n
     global charater
     global monsters
-    global figth
+    global fight
     # player_list = [1, 2, 3]
     skill_list = ["공격"]+skills_that_have(charater)
     # print(skill_list)
@@ -202,9 +204,11 @@ def display_2():
         reset_global(2, 2)
         enter_on = False
         # 전투
-        figth = True
+        skill_use(
+            charater, skill_list[selection[0] - 1], target_list[selection[1]-1])
 
-        pass
+        time.sleep(3)
+    pass
     return 2
 
 
@@ -251,16 +255,19 @@ def display_infos():
         else:
             charater.show_detail()
             monster_infos(monsters)
+            print_portion_amount()
 
 
-global figth
-figth = False
+global fight
+fight = False
 
 
-def figth_infos():
-    global figth
-    if figth:
-        print("figth")
+def fight_infos():
+    global fight
+    if fight:
+        text = "플레이어가 무언갈 했습니다"+"\n"
+        text = text+"플레이어가 무언갈 했습니다"+"\n"
+        print(text)
 
 
 ############## 게임시작#########################
@@ -278,7 +285,7 @@ display_n = 1
 enter_on = False
 while isActive:
     os.system('cls')
-    figth_infos()
+    fight_infos()
     display_infos()
     display_n = displayer_dic[display_n]()
     time.sleep(0.05)

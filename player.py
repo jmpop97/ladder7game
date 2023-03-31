@@ -1,5 +1,5 @@
 import random
-import inspect
+from monster import *
 
 
 class BaseCharacter:
@@ -18,16 +18,15 @@ class BaseCharacter:
         print(f"{self.name}: Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}")
 
     def show_detail(self):
-        print(
-            f'\n{self.name} 직업:{type(self).__name__}  Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}')
-        print(f'힘 {self._str} 방어력 {self.arm} 지능 {self._int} 속도 {self.spd}\n ')
+        print(f'{self.name} 직업:{type(self).__name__}  Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}')
+        print(f'힘 {self._str} 방어력 {self.arm} 지능 {self._int} 속도 {self.spd}')
 
     def attack(self, other):
-        damage = random.randint((self._str, self._str))
+        damage = random.randint(int(self._str*0.3), int(self._str*0.5))
         other.hp = max(other.hp - damage, 0)
-        print(f"{self.name}의 공격! {other.name}에게 {damage}의 데미지를 입혔습니다.")
+        print(f"{self.name}의 공격! {other.type}에게 {damage}의 데미지를 입혔습니다.")
         if other.hp == 0:
-            print(f"{other.name}이(가) 쓰러졌습니다.")
+            print(f"{other.type}이(가) 쓰러졌습니다.")
 
 # 베이스 캐릭터
 
@@ -45,9 +44,9 @@ class Warrior(BaseCharacter):
         damage = random.randint(self._str*0.8, self._str*1.2)
         other.hp = max(other.hp - damage, 0)
         self.mp = max(self.mp - 5, 0)
-        print(f"{self.name}의 파워 공격! {other.name}에게 {damage}의 데미지를 입혔습니다.")
+        print(f"{self.name}의 파워 공격! {other.type}에게 {damage}의 데미지를 입혔습니다.")
         if other.hp == 0:
-            print(f"{other.name}이(가) 쓰러졌습니다.")
+            print(f"{other.type}이(가) 쓰러졌습니다.")
 
 
 class Mage(BaseCharacter):
@@ -66,25 +65,25 @@ class Mage(BaseCharacter):
         damage = random.randint(self._int*0.8, self._int*1.2)
         other.hp = max(other.hp - damage, 0)
         self.mp = max(self.mp - 5, 0)
-        print(f"{self.name}의 화염 마법! {other.name}에게 {damage}의 데미지를 입혔습니다.")
+        print(f"{self.name}의 화염 마법! {other.type}에게 {damage}의 데미지를 입혔습니다.")
         if other.hp == 0:
-            print(f"{other.name}이(가) 쓰러졌습니다.")
+            print(f"{other.type}이(가) 쓰러졌습니다.")
 
     def wind_magic(self, other):
         damage1 = random.randint(
-            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
+            int((self._int)*0.3), int((self._int)*0.7))
         damage2 = random.randint(
-            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
+            int((self._int)*0.3), int((self._int)*0.7))
         damage3 = random.randint(
-            int((self._int - other.arm)*0.3), int((self._int - other.arm)*0.7))
+            int((self._int)*0.3), int((self._int)*0.7))
 
         damage = damage1 + damage2 + damage3
         other.hp = max(other.hp - damage, 0)
         self.mp = max(self.mp - 5, 0)
         print(
-            f"{self.name}의 바람 마법! {other.name}에게 {damage1}, {damage2}, {damage3}의 데미지를 입혔습니다.")
+            f"{self.name}의 바람 마법! {other.type}에게 {damage1}, {damage2}, {damage3}의 데미지를 입혔습니다.")
         if other.hp == 0:
-            print(f"{other.name}이(가) 쓰러졌습니다.")
+            print(f"{other.type}이(가) 쓰러졌습니다.")
 
 
 class Thief(BaseCharacter):
@@ -96,22 +95,25 @@ class Thief(BaseCharacter):
         self.hide = False
         if self.hide == True:
             self.spd == 99
-            print(f"{self.name}은 은신했습니다. 무조건 선공함")
+            
 
     def attack(self, other):
-        super().attack()
+        if self.hide == True:
+            print(f'{self.name}은 은신상태라서 공격을 할 수 없음')
+        else:
+            super.attack(self, other)
 
-    def hide(self):
+    def hiding(self):
         self.hide = True
-
+        print(f"{self.name}은 은신했습니다. 무조건 선공함")
     def hide_attack(self, other):
         if self.hide == True:
             damage = random.randint(
                 int((self._str + self.spd)*1.6), int((self._str + self.spd)*2.4))
             other.hp = max(other.hp - damage, 0)
-            print(f"{self.name}의 은신공격! {other.name}에게 {damage}의 치명적인 데미지를 입혔습니다.")
+            print(f"{self.name}의 은신공격! {other.type}에게 {damage}의 치명적인 데미지를 입혔습니다.")
             if other.hp == 0:
-                print(f"{other.name}이(가) 쓰러졌습니다.")
+                print(f"{other.type}이(가) 쓰러졌습니다.")
             self.hide = False
         elif self.hide == False:
             print("은신 상태가 아니라서 쓸 수가 없고 당신의 행동은 무효가됨")
@@ -127,21 +129,16 @@ class Archer(BaseCharacter):
         self.spd += 7
 
     def silver_arrow_shot(self, other):
-        damage = random.randint(int(self._str+self.spd)
-                                * 1.8, int(self._str+self.spd)*2.2)
+        damage = random.randint(int((self._str+self.spd)*1.8), int((self._str+self.spd)*2.2))
         other.hp = max(other.hp - damage, 0)
-        print(f"{self.name}의 은화살공격! {other.name}은 {damage}의 치명적인 트루데미지를 입었습니다.")
+        print(f"{self.name}의 은화살공격! {other.type}은 {damage}의 치명적인 트루데미지를 입었습니다.")
         if other.hp == 0:
-            print(f"{other.name}이(가) 쓰러졌습니다.")
+            print(f"{other.type}이(가) 쓰러졌습니다.")
 
 # 실험용
 
 
 # 실험용 몬스터
-a = Archer("Archer")
-b = Thief("Thief")
-d = Warrior("Warrior")
-c = Mage("Mage")
 
 
 def skills_that_have(player):
@@ -166,6 +163,59 @@ job_dic = {"Archer": Archer,
            "Warrior": Warrior,
            "Mage": Mage,
            "Thief": Thief}
+
+
+def skill_use(chara, skill, target_mon=Monster):
+    if skill == '파워공격':
+        try:
+            chara.power_attack(target_mon)
+        except:
+            print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+    elif skill == '공격':
+        chara.attack(target_mon)
+    elif skill == '은화살':
+        try:
+            chara.silver_arrow_shot(target_mon)
+        except:
+            print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+    elif skill == '화염마법': 
+        try:
+            chara.fire_magic(target_mon)
+        except:
+            print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+    elif skill == '바람마법':
+        chara.wind_magic(target_mon)
+        # try:
+        #     chara.wind_magic(target_mon)
+        # except:
+        #     print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+    elif skill == '은신':
+        chara.hiding()
+        # try:
+        #     chara.hiding()
+        # except:
+        #     print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+    elif skill == '은신공격':
+        try:
+            chara.hide_attack(target_mon)
+        except:
+            print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+    else: 
+        print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+
+mon1 = Monster(stage=1)
+
+a = Archer("Archer")
+b = Thief("Thief")
+d = Warrior("Warrior")
+c = Mage("Mage")
+
+skill_use(a, '화염마법', mon1)
+# skill_use(c, '바람마법', mon1)
+# skill_use(b, '은신', mon1)
+# skill_use(b, '공격', mon1)
+
+          
 
 # 플레이어를 임력하면 가지고 있는 스킬목록을 리스트로 반환
 

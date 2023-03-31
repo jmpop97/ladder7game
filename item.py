@@ -144,7 +144,8 @@ ring = MpItem("반지", 10)
 # 아이템 착용: 검 = sword.get("착용자") 방패 = shield.get("착용자") 지팡이 = staff.get("착용자") 신발 = shoe.get("착용자") 목걸이 = necklace.get("착용자") 반지 = ring.get("착용자")
 
 def print_portion_amount():
-    return f"빨간물약: {red_portion.amount}개 하얀물약: {white_portion.amount}개 파란물약: {blue_portion.amount}개"
+    print(
+        f"빨간물약: {red_portion.amount}개 하얀물약: {white_portion.amount}개 파란물약: {blue_portion.amount}개")
 
 
 portion_list = ["빨간물약", "하얀물약", "파란물약"]
