@@ -167,8 +167,9 @@ def display_2():
     global clear_game
     global stage
     # player_list = [1, 2, 3]
-    skill_list = ["공격"]+skills_that_have(charater)
+    skill_list = ["공격"]+skills_that_have(charater)+["포션먹기"]
     # print(skill_list)
+    portion_str_list = ['빨간물약', '하얀물약', '파란물약']
     target_list = monsters
     # print(key_m)
     # key_m=1:3 // select_n=1:2 // select_n=3
@@ -200,7 +201,8 @@ def display_2():
         # 초기화
 
         change_n = True
-    print_display(key_m, select_n, selection, skill_list, target_list)
+    action_list = print_display(key_m, select_n, selection, skill_list,
+                                target_list, portion_str_list)
     # print([key_n, key_m])
     # print(selection)
 
@@ -211,7 +213,7 @@ def display_2():
         enter_on = False
         # 전투
         skill_use(
-            charater, skill_list[selection[0] - 1], target_list[selection[1]-1])
+            charater, skill_list[selection[0] - 1], action_list[selection[1]-1])
         delete_monster(monsters)
         if len(monsters) == 0:
             stage += 1
@@ -229,7 +231,11 @@ def display_2():
     return 2
 
 
-def print_display(key_m, select_n, selection, skill_list, target_list):
+def print_display(key_m, select_n, selection, skill_list, target_list, portion_str_list):
+    if selection[0] == 3:
+        action_list = portion_str_list
+    else:
+        action_list = list(map(lambda x: x.type, target_list))
     if select_n == 1:
         text_a = '\033[1m' + \
             '행동방식'.center(10) + '\033[0m'+'공격대상'.center(10)
@@ -241,13 +247,14 @@ def print_display(key_m, select_n, selection, skill_list, target_list):
     elif key_m == 2:
         if select_n == 1:
             text_b = '\033[1m' + skill_list[selection[0] - 1].center(
-                10) + '\033[0m' + str(target_list[selection[1]-1].type).center(10)
+                10) + '\033[0m' + action_list[selection[1]-1].center(10)
         else:
             text_b = skill_list[selection[0] -
-                                1].center(10) + '\033[1m' + str(target_list[selection[1]-1].type).center(10)+'\033[0m'
+                                1].center(10) + '\033[1m' + action_list[selection[1]-1].center(10)+'\033[0m'
 
     print(text_a)
     print(text_b)
+    return action_list
 
 
 # tab눌르면 정보 뛰우기

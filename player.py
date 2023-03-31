@@ -1,5 +1,6 @@
 import random
 from monster import *
+from item import *
 
 
 class BaseCharacter:
@@ -27,6 +28,7 @@ class BaseCharacter:
         print(f"{self.name}의 공격! {other.type}에게 {damage}의 데미지를 입혔습니다.")
         if other.hp == 0:
             print(f"{other.type}이(가) 쓰러졌습니다.")
+
 
 # 베이스 캐릭터
 
@@ -166,12 +168,21 @@ job_dic = {"Archer": Archer,
            "Thief": Thief}
 
 
-def skill_use(chara, skill, target_mon=Monster):
+def skill_use(chara, skill, target_mon):
     if skill == '파워공격':
         try:
             chara.power_attack(target_mon)
         except:
             print(f'{chara.name}는 그런 스킬을 가지고 있지 않는데요?')
+    elif skill == "포션먹기":
+        print(target_mon)
+        if target_mon == "빨간물약":
+            red_portion.use(chara)
+        if target_mon == "하얀물약":
+            white_portion.use(chara)
+        if target_mon == "파란물약":
+            blue_portion.use(chara)
+
     elif skill == '공격':
         chara.attack(target_mon)
     elif skill == '은화살':
