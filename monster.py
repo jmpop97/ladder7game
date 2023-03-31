@@ -72,15 +72,9 @@ def stage_monster(stage):
 
 
 def monster_infos(monsters):
-    monster_dict = {}
-    for monster in monsters:
-        if monster.type in monster_dict:
-            monster_dict[monster.type] += 1
-            name = monster.type + " " + str(monster_dict[monster.type])
-        else:
-            monster_dict[monster.type] = 1
-            name = monster.type
-        print(f"{monster_dict[monster.type]}. 몬스터 이름: {name}, 레벨: {monster.level}, 체력: {monster.hp}, 공격력: {monster._str}")
+    for i, monster in enumerate(monsters):
+        print(
+            f"{i+1}. 몬스터 이름: {monster.type}, 레벨: {monster.level}, 체력: {monster.hp}, 공격력: {monster._str}")
 
 
 def delete_monster(monsters):
