@@ -249,9 +249,11 @@ def print_display(key_m, select_n, selection, skill_list, target_list, portion_s
             text_b = '\033[1m' + skill_list[selection[0] - 1].center(
                 10) + '\033[0m' + action_list[selection[1]-1].center(10)
         else:
+
             text_b = skill_list[selection[0] -
                                 1].center(10) + '\033[1m' + action_list[selection[1]-1].center(10)+'\033[0m'
-
+    if selection[0] != 3:
+        action_list = target_list
     print(text_a)
     print(text_b)
     return action_list
