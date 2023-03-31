@@ -160,9 +160,9 @@ def display_2():
     global figth
     # player_list = [1, 2, 3]
     skill_list = ["공격"]+skills_that_have(charater)
-    print(skill_list)
+    # print(skill_list)
     target_list = monsters
-    print(key_m)
+    # print(key_m)
     # key_m=1:3 // select_n=1:2 // select_n=3
     if key_m == 1:
         range_n = 2
@@ -173,7 +173,6 @@ def display_2():
         range_n = len(target_list)
     else:
         range_n = 10
-    print(range_n)
     reset_global(range_n, 2)
 
     # key_n,key_m 설정
@@ -193,8 +192,9 @@ def display_2():
         # 초기화
 
         change_n = True
-    print([key_n, key_m])
-    print(selection)
+    print_display(key_m, select_n, selection, skill_list, target_list)
+    # print([key_n, key_m])
+    # print(selection)
 
     if enter_on:
         # 엔터시 상호작용
@@ -206,6 +206,27 @@ def display_2():
 
         pass
     return 2
+
+
+def print_display(key_m, select_n, selection, skill_list, target_list):
+    if select_n == 1:
+        text_a = '\033[1m' + \
+            '행동방식'.center(10) + '\033[0m'+'공격대상'.center(10)
+    elif select_n == 2:
+        text_a = '행동방식'.center(10) + '\033[1m'+'공격대상'.center(10)+'\033[0m'
+    if key_m == 1:
+        text_b = skill_list[selection[0] - 1].center(
+            10) + str(target_list[selection[1]-1].type).center(10)
+    elif key_m == 2:
+        if select_n == 1:
+            text_b = '\033[1m' + skill_list[selection[0] - 1].center(
+                10) + '\033[0m' + str(target_list[selection[1]-1].type).center(10)
+        else:
+            text_b = skill_list[selection[0] -
+                                1].center(10) + '\033[1m' + str(target_list[selection[1]-1].type).center(10)+'\033[0m'
+
+    print(text_a)
+    print(text_b)
 
 
 # tab눌르면 정보 뛰우기
@@ -223,8 +244,12 @@ def display_infos():
     global tab_on
     global charater
     global monsters
+
     if (tab_on):
-        charater.show_detail()
+        if display_n == 1:
+            print("\n info not definition \n")
+        else:
+            charater.show_detail()
 
 
 global figth

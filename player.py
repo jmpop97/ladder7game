@@ -18,8 +18,9 @@ class BaseCharacter:
         print(f"{self.name}: Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}")
 
     def show_detail(self):
-        print(f'{self.name} 직업:{type(self).__name__}  Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}')
-        print(f'힘 {self._str} 방어력 {self.arm} 지능 {self._int} 속도 {self.spd}')
+        print(
+            f'\n{self.name} 직업:{type(self).__name__}  Hp {self.hp}/{self.max_hp} MP {self.max_mp}/{self.max_mp}')
+        print(f'힘 {self._str} 방어력 {self.arm} 지능 {self._int} 속도 {self.spd}\n ')
 
     def attack(self, other):
         damage = random.randint((self._str, self._str))
@@ -165,6 +166,7 @@ job_dic = {"Archer": Archer,
            "Warrior": Warrior,
            "Mage": Mage,
            "Thief": Thief}
+
 # 플레이어를 임력하면 가지고 있는 스킬목록을 리스트로 반환
 
 # print(skills_that_have(a))
