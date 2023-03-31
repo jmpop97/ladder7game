@@ -146,6 +146,7 @@ selection = [1, 1]
 global change_n
 change_n = 1
 select_n = 3
+global player_death
 
 
 def display_2():
@@ -160,6 +161,7 @@ def display_2():
     global charater
     global monsters
     global fight
+    global player_death
     # player_list = [1, 2, 3]
     skill_list = ["공격"]+skills_that_have(charater)
     # print(skill_list)
@@ -209,8 +211,6 @@ def display_2():
         delete_monster(monsters)
         player_death = monster_attack(monsters, charater)
         print(player_death)
-        if player_death:
-            "Game Over"
         time.sleep(1)
     pass
     return 2
@@ -287,12 +287,16 @@ isActive = True
 key_zero = True
 display_n = 1
 enter_on = False
+player_death = False
 while isActive:
     os.system('cls')
     fight_infos()
     display_infos()
     display_n = displayer_dic[display_n]()
+    if player_death:
+        print("Game Over")
+        break
     time.sleep(0.05)
-    pass
+
 
 print("종료했습니다.")

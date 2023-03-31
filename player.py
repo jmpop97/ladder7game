@@ -5,10 +5,10 @@ from monster import *
 class BaseCharacter:
     def __init__(self, name):
         self.name = name
-        self.max_hp = 100
-        self.hp = 100
+        self.max_hp = 1000
+        self.hp = self.max_hp
         self.max_mp = 50
-        self.mp = 50
+        self.mp = self.max_mp
         self._str = 20
         self.arm = 5
         self._int = 15
