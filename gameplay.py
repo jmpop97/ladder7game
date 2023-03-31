@@ -243,7 +243,7 @@ def print_display(key_m, select_n, selection, skill_list, target_list, portion_s
         text_a = '행동방식'.center(10) + '\033[1m'+'공격대상'.center(10)+'\033[0m'
     if key_m == 1:
         text_b = skill_list[selection[0] - 1].center(
-            10) + str(target_list[selection[1]-1].type).center(10)
+            10) + action_list[selection[1]-1].center(10)
     elif key_m == 2:
         if select_n == 1:
             text_b = '\033[1m' + skill_list[selection[0] - 1].center(
