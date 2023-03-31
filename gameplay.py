@@ -222,11 +222,14 @@ def display_2():
             else:
                 print(f'stage clear')
                 get_reward(charater)
+                charater.hp = charater.max_hp
+                charater.mp = charater.max_mp
+
                 monsters = stage_monster(stage)
         else:
             player_death = monster_attack(monsters, charater)
 
-        time.sleep(3)
+        time.sleep(2)
     pass
     return 2
 
@@ -293,8 +296,8 @@ listener = keyboard.Listener(
 listener.start()
 
 print("실행중입니다.")
-# change#player_name = input("사용자 이름 : ")
-player_name = "이름"
+player_name = input("사용자 이름 : ")
+# player_name = "이름"
 isActive = True
 key_zero = True
 display_n = 1
